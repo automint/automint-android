@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#263238</color>
+    <color name="colorPrimaryDark">#37474F</color>
+    <color name="colorAccent">#0288D1</color>
+
+    <!-- grey palette -->
+    <color name="g900">#212121</color>
+    <color name="g800">#424242</color>
+    <color name="g700">#616161</color>
+    <color name="g300">#E0E0E0</color>
+    <color name="g200">#EEEEEE</color>
+    <color name="g100">#F5F5F5</color>
+    
+    <!-- light blue palette -->
+    <color name="lb800">#0277BD</color>
+    <color name="lb700">#0288D1</color>
+    <color name="lb600">#039BE5</color>
+    <color name="lb500">#03A9F4</color>
 </resources>

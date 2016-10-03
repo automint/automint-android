@@ -1,10 +1,22 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+
+    <!-- Login Activity Theme -->
+    <style name="AppTheme.Login" parent="AppTheme">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Services Activity Theme -->
+    <style name="AppTheme.Services" parent="AppTheme">
+        <item name="colorButtonNormal">@color/lb700</item>
+        <item name="colorPrimary">@color/lb600</item>
+        <item name="colorPrimaryDark">@color/lb800</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 

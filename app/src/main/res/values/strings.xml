@@ -1,3 +1,53 @@
 <resources>
     <string name="app_name">Automint</string>
+
+    <!-- activity titles -->
+    <string name="title_activity_service_ra">Services</string>
+    <string name="title_activity_service_add">Add Service</string>
+    <string name="title_activity_service_treatments">Treatments</string>
+    <string name="title_activity_service_parts">Parts</string>
+
+    <!-- defaults -->
+    <string name="default_currency">Rs.</string>
+
+    <!-- labels -->
+    <string name="label_username">Username:</string>
+    <string name="label_password">Password:</string>
+    <string name="label_submit">Submit</string>
+    <string name="label_customer">Customer:</string>
+    <string name="label_vehicle">Vehicle:</string>
+    <string name="label_treatments">Treatments:</string>
+    <string name="label_parts">Parts:</string>
+    <string name="label_total_cost">Total Cost:</string>
+    <string name="label_payment">Payment</string>
+    <string name="label_save">Save</string>
+    <string name="label_customer_name">Customer Name:</string>
+    <string name="label_customer_mobile">Customer Mobile:</string>
+    <string name="label_done">Done</string>
+    <string name="label_vehicle_manuf">Manufacturer:</string>
+    <string name="label_vehicle_model">Model:</string>
+    <string name="label_vehicle_reg">Registration:</string>
+    <string name="label_vehicle_type">Type:</string>
+    <string name="label_add_treatment">Add Treatment</string>
+    <string name="label_treatment_name">Treatment:</string>
+    <string name="label_rate">Rate:</string>
+    <string name="label_add_part">Add Part</string>
+    <string name="label_qty">Qty:</string>
+    <string name="label_amount">Amount:</string>
+    <string name="label_x">x</string>
+    <string name="label_equal_to">=</string>
+    <string name="label_part_name">Part:</string>
+
+    <!-- numbers -->
+    <string name="number_zero">0</string>
+
+    <!-- messages -->
+    <string name="message_username_null">Please Enter Username.</string>
+    <string name="message_password_null">Please Enter Password.</string>
+    <string name="message_click_to_add">(tap to add)</string>
+    <string name="message_click_to_edit">(tap to edit)</string>
+    <string name="message_please_wait">Please Wait</string>
+    <string name="message_loading">Loading</string>
+    <string name="error_treatment_add">Could not add treatment at moment. Please Try Again!</string>
+    <string name="error_part_add">Could not add part at moment. Please Try Again!</string>
 </resources>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minWidth="@dimen/min_service_add_infoDialogs_width"
+    android:padding="@dimen/padding_services_add_infoDialogs_box">
+
+    <android.support.v7.widget.LinearLayoutCompat android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_service_add_infoDialogs_sections">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_treatment_name"
+            android:textSize="12sp"
+            android:padding="2dp"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="normal|bold"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/input_treatment_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_editbox"
+            android:fontFamily="sans-serif-light"
+            android:inputType="textCapWords"/>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.v7.widget.LinearLayoutCompat android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_service_add_infoDialogs_sections"
+        android:layout_marginBottom="@dimen/margin_service_add_infoDialogs_sections">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_rate"
+            android:textSize="12sp"
+            android:padding="2dp"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="normal|bold"/>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/input_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_editbox"
+            android:fontFamily="sans-serif-light"
+            android:inputType="numberDecimal"/>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_service_add_infoDialogs_sections">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/button_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/label_done"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/lb700"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/selector_service_treatments"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_service_add_section_box">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_services_add_section_box"
+        android:gravity="center_vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/text_part_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:text="@string/message_loading"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="normal|bold"
+            android:textSize="12sp"/>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:gravity="end">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_currency_field1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_currency"
+                android:fontFamily="sans-serif-thin"
+                android:textStyle="normal|bold"
+                android:textSize="12sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_part_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_zero"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="14sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:text="@string/label_x"
+                android:fontFamily="sans-serif-thin"
+                android:textStyle="normal|bold"
+                android:textSize="12sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_part_qty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_zero"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="14sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:text="@string/label_equal_to"
+                android:fontFamily="sans-serif-thin"
+                android:textStyle="normal|bold"
+                android:textSize="12sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_currency_field2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_currency"
+                android:fontFamily="sans-serif-thin"
+                android:textStyle="normal|bold"
+                android:textSize="12sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/text_part_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_zero"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="14sp"/>
+
+        </android.support.v7.widget.LinearLayoutCompat>
+
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</android.support.v7.widget.LinearLayoutCompat>
