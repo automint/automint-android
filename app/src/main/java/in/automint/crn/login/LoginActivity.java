@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(String response) {
                 Log.i(TAG, response);
-                startActivity(new Intent(LoginActivity.this, AddService.class));
+                startActivity(new Intent(LoginActivity.this, ViewServices.class));
                 LoginActivity.this.finish();
             }
         }, new Response.ErrorListener() {
@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onErrorResponse(VolleyError error) {
                 if (error != null)
                     Log.e(TAG, error.toString());
-                startActivity(new Intent(LoginActivity.this, AddService.class));
+                startActivity(new Intent(LoginActivity.this, ViewServices.class));
                 LoginActivity.this.finish();
 
             }

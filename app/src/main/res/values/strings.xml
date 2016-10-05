@@ -37,6 +37,9 @@
     <string name="label_x">x</string>
     <string name="label_equal_to">=</string>
     <string name="label_part_name">Part:</string>
+    <string name="label_odometer">Odometer:</string>
+    <string name="label_km">km.</string>
+    <string name="label_date">Date:</string>
 
     <!-- numbers -->
     <string name="number_zero">0</string>

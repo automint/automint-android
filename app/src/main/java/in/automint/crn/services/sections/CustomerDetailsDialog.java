@@ -14,6 +14,7 @@ import android.view.Window;
 import java.util.Map;
 
 import in.automint.crn.R;
+import in.automint.crn.data.KeyNames;
 
 /**
  * Dialog to display and handle Customer Details in Add Service module
@@ -61,6 +62,8 @@ public class CustomerDetailsDialog implements View.OnClickListener, DialogInterf
         AppCompatEditText inputCustomerMobile = (AppCompatEditText) this.dialog.findViewById(R.id.input_customer_mobile);
         String name = inputCustomerName.getText().toString();
         String mobile = inputCustomerMobile.getText().toString();
+        this.customerDetails.put(KeyNames.Customer.NAME, name);
+        this.customerDetails.put(KeyNames.Customer.MOBILE, mobile);
         if (!mobile.isEmpty())
             name = (name.isEmpty() ? mobile : name.concat(" | " + mobile));
         if (name.isEmpty() || mobile.isEmpty()) {
@@ -70,7 +73,5 @@ public class CustomerDetailsDialog implements View.OnClickListener, DialogInterf
             target.setTypeface(Typeface.SANS_SERIF, Typeface.NORMAL);
             target.setText(name);
         }
-        this.customerDetails.put("name", name);
-        this.customerDetails.put("mobile", mobile);
     }
 }

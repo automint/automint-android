@@ -112,7 +112,7 @@ public class TreatmentsActivity extends AppCompatActivity implements View.OnClic
             JSONObject object = new JSONObject();
             try {
                 object.put(TreatmentHolder.FIELD_DETAILS, holder.details);
-                object.put(TreatmentHolder.FIELD_RATE, holder.rate);
+                object.put(TreatmentHolder.FIELD_RATE, Double.valueOf(holder.rate));
                 array.put(object);
             } catch (JSONException e) {
                 Log.e(TAG, "error in holder");

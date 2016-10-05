@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import in.automint.crn.R;
+import in.automint.crn.data.KeyNames;
 
 /**
  * Dialog to display and handle Vehicle Details in Add Service module
@@ -76,6 +77,10 @@ public class VehicleDetailsDialog implements View.OnClickListener, DialogInterfa
         String manuf = inputVehicleManuf.getText().toString();
         String model = inputVehicleModel.getText().toString();
         String reg = inputVehicleReg.getText().toString();
+        this.vehicleDetails.put(KeyNames.Vehicle.MANUFACTURER, manuf);
+        this.vehicleDetails.put(KeyNames.Vehicle.MODEL, model);
+        this.vehicleDetails.put(KeyNames.Vehicle.REG, reg);
+        this.vehicleDetails.put(KeyNames.Vehicle.TYPE, spinnerVehicleTypes.getSelectedItem().toString());
         if (!manuf.isEmpty() || !model.isEmpty()) {
             vehicleName = (!manuf.isEmpty()) ? manuf : "";
             vehicleName = vehicleName.concat((!model.isEmpty()) ? (" " + model) : "");
@@ -89,9 +94,5 @@ public class VehicleDetailsDialog implements View.OnClickListener, DialogInterfa
             target.setTypeface(Typeface.SANS_SERIF, Typeface.NORMAL);
             target.setText(vehicleName);
         }
-        this.vehicleDetails.put("manuf", manuf);
-        this.vehicleDetails.put("model", model);
-        this.vehicleDetails.put("reg", reg);
-        this.vehicleDetails.put("type", spinnerVehicleTypes.getSelectedItem().toString());
     }
 }

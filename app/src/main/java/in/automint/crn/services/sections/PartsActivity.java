@@ -113,9 +113,9 @@ public class PartsActivity extends AppCompatActivity implements View.OnClickList
             JSONObject object = new JSONObject();
             try {
                 object.put(PartHolder.FIELD_NAME, holder.name);
-                object.put(PartHolder.FIELD_RATE, holder.rate);
-                object.put(PartHolder.FIELD_QTY, holder.qty);
-                object.put(PartHolder.FIELD_AMOUNT, holder.amount);
+                object.put(PartHolder.FIELD_RATE, Double.valueOf(holder.rate));
+                object.put(PartHolder.FIELD_QTY, Double.valueOf(holder.qty));
+                object.put(PartHolder.FIELD_AMOUNT, Double.valueOf(holder.amount));
                 array.put(object);
             } catch (JSONException e) {
                 Log.e(TAG, "error in holder");

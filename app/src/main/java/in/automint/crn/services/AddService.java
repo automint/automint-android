@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.ListViewCompat;
@@ -16,6 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.couchbase.lite.CouchbaseLiteException;
+import com.couchbase.lite.Database;
+import com.couchbase.lite.Document;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,11 +29,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import in.automint.crn.R;
+import in.automint.crn.data.KeyNames;
 import in.automint.crn.data.LocData;
 import in.automint.crn.data.PartHolder;
 import in.automint.crn.data.TreatmentHolder;
+import in.automint.crn.manage.CouchBaseLite;
 import in.automint.crn.manage.UiElements;
 import in.automint.crn.services.sections.CustomerDetailsDialog;
 import in.automint.crn.services.sections.PartsActivity;
@@ -48,6 +56,7 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
     //  define UI elements
     private AppCompatCheckBox checkboxPayment;
     private AppCompatTextView textCustomerDetails, textVehicleName, textServiceCost;
+    private AppCompatEditText inputDate, inputOdometer;
     private UiElements uiElements;
     private CustomerDetailsDialog customerDetailsDialog;
     private VehicleDetailsDialog vehicleDetailsDialog;
@@ -55,9 +64,12 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
     //  backend elements
     private Map<String, String> customerDetails = new HashMap<>();
     private Map<String, String> vehicleDetails = new HashMap<>();
+    private Map<String, Object> problemList = new HashMap<>();
+    private Map<String, Object> inventoryList = new HashMap<>();
     private Adapter treatmentAdapter = new Adapter();
     private Adapter partsAdapter = new Adapter();
     private LocData tmpDataTreatments = new LocData();
+    private Database database = CouchBaseLite.getDatabaseInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,9 +93,12 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
             List<Holder> treatmentHolders = new ArrayList<>();
             for (int i = 0; i < treatments.length(); i++) {
                 JSONObject item = treatments.optJSONObject(i);
+                Map<String, Object> problem = new HashMap<>();
                 String details = item.optString(TreatmentHolder.FIELD_DETAILS);
                 String rate = item.optString(TreatmentHolder.FIELD_RATE);
                 treatmentHolders.add(new Holder(Double.valueOf(rate), 0, Double.valueOf(rate), details, Holder.TYPE_TREATMENT));
+                problem.put(TreatmentHolder.FIELD_RATE, Double.valueOf(rate));
+                problemList.put(details, problem);
             }
             treatmentAdapter.animateTo(treatmentHolders);
         }
@@ -91,11 +106,16 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
             List<Holder> partHolders = new ArrayList<>();
             for (int i = 0; i < parts.length(); i++) {
                 JSONObject item = parts.optJSONObject(i);
+                Map<String, Object> inventory = new HashMap<>();
                 String name = item.optString(PartHolder.FIELD_NAME);
                 String rate = item.optString(PartHolder.FIELD_RATE);
                 String qty = item.optString(PartHolder.FIELD_QTY);
                 String amount = item.optString(PartHolder.FIELD_AMOUNT);
                 partHolders.add(new Holder(Double.valueOf(rate), Double.valueOf(qty), Double.valueOf(amount), name, Holder.TYPE_PART));
+                inventory.put(PartHolder.FIELD_RATE, Double.valueOf(rate));
+                inventory.put(PartHolder.FIELD_QTY, Double.valueOf(qty));
+                inventory.put(PartHolder.FIELD_AMOUNT, Double.valueOf(amount));
+                inventoryList.put(name, inventory);
             }
             partsAdapter.animateTo(partHolders);
         }
@@ -124,6 +144,8 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
         textCustomerDetails = (AppCompatTextView) findViewById(R.id.text_customer_details);
         textVehicleName = (AppCompatTextView) findViewById(R.id.text_vehicle_name);
         textServiceCost = (AppCompatTextView) findViewById(R.id.text_service_cost);
+        inputDate = (AppCompatEditText) findViewById(R.id.input_date);
+        inputOdometer = (AppCompatEditText) findViewById(R.id.input_odometer);
 
         ListViewCompat listTreatments = (ListViewCompat) findViewById(R.id.list_treatments);
         ListViewCompat listParts = (ListViewCompat) findViewById(R.id.list_parts);
@@ -147,6 +169,10 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
             listTreatments.setAdapter(treatmentAdapter);
         if (listParts != null)
             listParts.setAdapter(partsAdapter);
+        if (inputDate != null) {
+            inputDate.setOnClickListener(this);
+            inputDate.setText(uiElements.todayInDisplayFormat());
+        }
     }
 
     public void calculateCost() {
@@ -175,6 +201,55 @@ public class AddService extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.card_parts_box:
                 startActivity(new Intent(AddService.this, PartsActivity.class));
+                break;
+            case R.id.input_date:
+                uiElements.showDatePickerDialog(inputDate, true);
+                break;
+            case R.id.button_save:
+                String nameForId = customerDetails.get(KeyNames.Customer.NAME);
+                nameForId = (nameForId == null || nameForId.isEmpty()) ? "Anonymous".toLowerCase().replace(" ", "-") : nameForId.toLowerCase().replace(" ", "-");
+                String documentId = "usr-" + nameForId + UUID.randomUUID().toString();
+                Map<String, Object> vehicles, services;
+                Map<String, Object> user = new HashMap<>();
+                Map<String, Object> vehicle = new HashMap<>();
+                Map<String, Object> service = new HashMap<>();
+                service.put(KeyNames.Service.COST, Double.valueOf(textServiceCost.getText().toString()));
+                service.put(KeyNames.Service.STATE, "Bill");
+                service.put(KeyNames.Service.STATUS, (checkboxPayment.isChecked() ? "paid" : "due"));
+                service.put(KeyNames.Service.ODO, Double.valueOf(inputOdometer.getText().toString().isEmpty() ? "0" : inputOdometer.getText().toString()));
+                service.put(KeyNames.Service.DATE, uiElements.convertDisplayToDbFormat(inputDate.getText().toString()));
+                service.put(KeyNames.Service.INVOICE_NO, "1");                                                                        //  TODO:implement backend mechanism for this
+                service.put(KeyNames.Service.PROBLEMS, problemList);
+                service.put(KeyNames.Service.INVENTORIES, inventoryList);
+
+                //  vehicle details
+                vehicle.put(KeyNames.Vehicle.MANUFACTURER, vehicleDetails.get(KeyNames.Vehicle.MANUFACTURER));
+                vehicle.put(KeyNames.Vehicle.MODEL, vehicleDetails.get(KeyNames.Vehicle.MODEL));
+                vehicle.put(KeyNames.Vehicle.REG, vehicleDetails.get(KeyNames.Vehicle.REG));
+                vehicle.put(KeyNames.Vehicle.TYPE, vehicleDetails.get(KeyNames.Vehicle.TYPE));
+
+                services = new HashMap<>();
+                services.put("srvc-" + UUID.randomUUID().toString(), service);
+                vehicle.put(KeyNames.Vehicle.SERVICES, services);
+
+                //  user details
+                user.put(KeyNames.Customer.NAME, customerDetails.get(KeyNames.Customer.NAME));
+                user.put(KeyNames.Customer.MOBILE, customerDetails.get(KeyNames.Customer.MOBILE));
+
+                vehicles = new HashMap<>();
+                vehicles.put("vhcl-" + UUID.randomUUID().toString(), vehicle);
+                user.put(KeyNames.Customer.VEHICLES, vehicles);
+                Map<String, Object> document = new HashMap<>();
+                document.put("user", user);
+                try {
+                    Document doc = database.getDocument(documentId);
+                    doc.putProperties(document);
+                    uiElements.showSnackBar(R.string.app_name, Snackbar.LENGTH_SHORT);
+                } catch (CouchbaseLiteException e) {
+                    Log.e(TAG, "Error saving database");
+                    uiElements.showSnackBar(R.string.message_loading, Snackbar.LENGTH_SHORT);
+                }
+                Log.i(TAG, user.toString());
                 break;
         }
     }
