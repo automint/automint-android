@@ -10,6 +10,10 @@
     <!-- defaults -->
     <string name="default_currency">Rs.</string>
 
+    <!-- formatted strings -->
+    <string name="text_amount">\u20B9 %1$s</string>
+    <string name="text_odometer"><![CDATA[<b>%1$s</b> km]]></string>
+
     <!-- labels -->
     <string name="label_username">Username:</string>
     <string name="label_password">Password:</string>

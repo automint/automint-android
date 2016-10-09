@@ -65,6 +65,20 @@ public class UiElements {
     }
 
     /**
+     * Converts db formatted date ot display format (moment.js format to dd MMM yyyy format)
+     * @param date as date in moment.js format
+     * @return date as string
+     */
+    public String convertDbToDisplayFormat(String date) {
+        try {
+            return displayServiceDateFormat.format(dbFormat.parse(date));
+        } catch (ParseException e) {
+            Log.e(TAG, "Error in Parsing Date (convertDbToDisplay): " + ((date == null) ? "no date" : date));
+            return null;
+        }
+    }
+
+    /**
      * Initialize date picker dialog which will allow user to select date and display in particular box
      * @param result as edit box in which result will be displayed
      * @param maxDateEnabled true if user is not allowed select date grater than today
